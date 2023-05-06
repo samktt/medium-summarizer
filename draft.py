@@ -4,30 +4,20 @@ from bs4 import BeautifulSoup as bs
 import re
 import time
 
-
 #Setting the URL to Medium's homepage
 url = "https://medium.com/"
-
 
 #Sending a GET request to the URL and parsing the HTML response using Beautiful Soup
 res = requests.get(url)
 soup = bs(res.text, "html.parser")
 
-#print(res.text)
-
 #Finding the section with class "pw-homefeed", which contains the articles
 news_article = soup.find("section", {"class": "pw-homefeed"})
-
-print(news_article)
 
 #Finding all the 'a' elements with 'href' attributes containing an https URL, and storing them in a set to remove duplicates
 articles = set(map(lambda x: x.get('href'), news_article.find_all("a", attrs={'href': re.compile("^https://")})))
 
-#len(articles)
-#print(articles)
-
 #Iterating through the set of articles
-
 for article in articles:
     url = article
     print(url)
