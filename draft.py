@@ -1,4 +1,4 @@
-#importing libraries
+# Importing libraries
 import requests
 from bs4 import BeautifulSoup as bs
 import re
@@ -16,20 +16,14 @@ soup = bs(res.text, "html.parser")
 # Find the section with class "pw-homefeed", which contains the articles
 news_article = soup.find("section", {"class": "pw-homefeed"})
 
-# Define a function to extract 'href' attribute from an 'a' element
-def extract_href(a_element):
-    return a_element.get('href')
-
 # Find all the 'a' elements with 'href' attributes containing an https URL
 a_elements = news_article.find_all("a", attrs={'href': re.compile("^https://")})
 
-# Extract the URLs (href attributes) from the 'a' elements using the 'extract_href' function
-article_urls = map(extract_href, a_elements)
+# Extract the URLs (href attributes) from the 'a' elements using a lambda function
+article_urls = map(lambda x: x.get('href'), a_elements)
 
 # Convert the list of URLs to a set to remove duplicates
 unique_articles = set(article_urls)
-
-
 
 # Function to fetch and parse article data from a given URL
 def get_article_data(article_url):
@@ -56,13 +50,14 @@ def get_article_data(article_url):
         'author': author_text
     }
 
+
 # Iterate through the set of unique article URLs
-for article in articles:
+for article in unique_articles:
     try:
         # Fetch and parse the article data
         article_data = get_article_data(article)
 
-        # Check if the required data (title, descriptions) is available
+        # Check if the required data (author, title, descriptions) is available
         if article_data['title'] and article_data['descs']:
             # Print the extracted information in a formatted manner
             print(f"URL: {article_data['url']}")
