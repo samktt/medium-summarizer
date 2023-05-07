@@ -1,5 +1,34 @@
+# Importing libraries
+import requests
+from bs4 import BeautifulSoup as bs
+from transformers import pipeline
+import re
+import time
+
 # Initialize the text summarization pipeline with the BART model
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+# Set the URL to Medium's homepage
+url = "https://medium.com/"
+
+# Send a GET request to the URL
+res = requests.get(url)
+
+# Parse the HTML response using Beautiful Soup
+soup = bs(res.text, "html.parser")
+
+# Find the section with class "pw-homefeed", which contains the articles
+news_article = soup.find("section", {"class": "pw-homefeed"})
+
+# Find all the 'a' elements with 'href' attributes containing an https URL
+a_elements = news_article.find_all("a", attrs={'href': re.compile("^https://")})
+
+# Extract the URLs (href attributes) from the 'a' elements using a lambda function
+article_urls = map(lambda x: x.get('href'), a_elements)
+
+# Convert the list of URLs to a set to remove duplicates
+unique_articles = set(article_urls)
+
 
 # Function to fetch and parse article data from a given URL
 def get_article_data(article_url):
