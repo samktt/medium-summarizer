@@ -62,8 +62,8 @@ for article in articles:
         # Fetch and parse the article data
         article_data = get_article_data(article)
 
-        # Check if the required data (author, title, descriptions) is available
-        if article_data['author'] and article_data['title'] and article_data['descs']:
+        # Check if the required data (title, descriptions) is available
+        if article_data['title'] and article_data['descs']:
             # Print the extracted information in a formatted manner
             print(f"URL: {article_data['url']}")
             print(f"Author: {article_data['author']}")
