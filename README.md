@@ -1,7 +1,4 @@
-# medium-api
-Creating an Api for the popular blogging platform Medium since the official API is no longer supported.
-
-## articles_summarizer.py
+# Medium Articles Summarizer
 
 This Python script, articles_summarizer.py, in the medium-api project, fetches and summarizes Medium articles using the BART model. The summarized information includes the article URL, author, title, and summary.
 
