@@ -2,6 +2,8 @@
 
 The articles_summarizer.py Python script fetches and summarizes Medium articles on the main page using the BART model. The summarized information includes the article URL, author, title, and summary.
 
+![descriptive image](summarizer.png)
+
 ### Dependencies
 The script uses the following libraries:
 
